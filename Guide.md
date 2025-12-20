@@ -1,0 +1,251 @@
+# TODO App - Step-by-Step Implementation Guide
+
+**Stack:** Angular + FastAPI + Supabase (Postgres) + Docker
+
+**Architecture:**
+```
+Angular (Docker) → Supabase Auth → JWT → FastAPI (Docker) → Supabase Postgres
+```
+
+---
+
+## Phase 1: Frontend (Angular)
+
+### 1.1 Initial Setup
+- [x] Create Angular project
+- [x] Verify Angular runs at http://localhost:4200
+- [ ] Install Supabase JS SDK
+- [ ] Create environment configuration files
+
+### 1.2 Supabase Integration
+- [ ] Create Supabase project (get URL and anon key)
+- [ ] Configure Supabase client in Angular
+- [ ] Create `SupabaseService` for auth and API calls
+
+### 1.3 Authentication Components
+- [ ] Create `LoginComponent`
+- [ ] Create `RegisterComponent`
+- [ ] Create `AuthService` (wraps SupabaseService auth methods)
+- [ ] Add auth state management
+
+### 1.4 Todo Components
+- [ ] Create `TodoListComponent` (display all todos)
+- [ ] Create `TodoItemComponent` (single todo with edit/delete/pin/complete)
+- [ ] Create `TodoFormComponent` (create/edit todos)
+- [ ] Create `TodoService` (calls FastAPI backend with JWT)
+
+### 1.5 Routing & Guards
+- [ ] Set up routes (/, /login, /register, /todos)
+- [ ] Create `AuthGuard` (protect /todos route)
+- [ ] Add navigation component with login/logout
+
+### 1.6 UI Polish
+- [ ] Add loading states
+- [ ] Add error handling and user feedback
+- [ ] Style components (basic CSS)
+- [ ] Add filters (show completed, show pinned only)
+
+---
+
+## Phase 2: Database (Supabase)
+
+### 2.1 Supabase Project Setup
+- [ ] Create new Supabase project at https://supabase.com
+- [ ] Note down Project URL and anon/public API key
+- [ ] Note down Database password (for direct DB access if needed)
+
+### 2.2 Create Users Table
+- [ ] Open SQL Editor in Supabase Dashboard
+- [ ] Run SQL to create `public.users` table
+- [ ] Set up Row Level Security (RLS) policies for users
+- [ ] Test: verify table appears in Table Editor
+
+### 2.3 Create Todos Table
+- [ ] Run SQL to create `public.todos` table
+- [ ] Add indexes for performance (user_id)
+- [ ] Create trigger for auto-updating `updated_at`
+- [ ] Set up Row Level Security (RLS) policies for todos
+
+### 2.4 Auto-Profile Creation
+- [ ] Create trigger function to auto-create profile on signup
+- [ ] Attach trigger to `auth.users` table
+- [ ] Test: sign up a user and verify profile row is created
+
+### 2.5 Database Testing
+- [ ] Test insert/select/update/delete via SQL editor
+- [ ] Verify RLS policies work (try accessing other user's data)
+- [ ] Check soft delete behavior (deleted_at)
+
+---
+
+## Phase 3: Backend (FastAPI)
+
+### 3.1 Initial Setup
+- [x] Create backend directory
+- [x] Create Python virtual environment
+- [x] Install FastAPI and Uvicorn
+- [x] Create basic main.py with health check
+- [ ] Create requirements.txt with all dependencies
+- [ ] Create .env file for secrets
+
+### 3.2 Dependencies & Configuration
+- [ ] Install: `python-jose` (JWT), `python-dotenv`, `httpx`, `asyncpg`
+- [ ] Create `config.py` (load env vars: Supabase URL, JWT secret, DB URL)
+- [ ] Create database connection pool (async)
+
+### 3.3 JWT Verification
+- [ ] Create `auth.py` with JWT verification function
+- [ ] Create dependency `get_current_user` (extracts user_id from JWT)
+- [ ] Add CORS middleware (allow Angular origin)
+
+### 3.4 Database Models & Queries
+- [ ] Create `models.py` (Pydantic models for Todo, User)
+- [ ] Create `database.py` (async Postgres query functions)
+- [ ] Add CRUD functions: create_todo, get_todos, update_todo, soft_delete_todo
+
+### 3.5 API Endpoints
+- [ ] `GET /api/todos` - list user's todos (exclude deleted)
+- [ ] `POST /api/todos` - create new todo
+- [ ] `PATCH /api/todos/{id}` - update todo (title, description, completed, pinned)
+- [ ] `DELETE /api/todos/{id}` - soft delete todo (set deleted_at)
+- [ ] `GET /api/me` - get current user profile (optional)
+
+### 3.6 Testing Backend
+- [ ] Test endpoints with curl/Postman using real Supabase JWT
+- [ ] Verify user isolation (can't see other users' todos)
+- [ ] Test error cases (invalid JWT, missing fields, etc.)
+
+---
+
+## Phase 4: Docker
+
+### 4.1 Angular Dockerfile
+- [ ] Create `frontend/Dockerfile`
+- [ ] Multi-stage build (build Angular, serve with nginx)
+- [ ] Create `frontend/.dockerignore`
+- [ ] Test: build and run Angular container locally
+
+### 4.2 FastAPI Dockerfile
+- [ ] Create `backend/Dockerfile`
+- [ ] Install dependencies from requirements.txt
+- [ ] Use uvicorn to run FastAPI
+- [ ] Create `backend/.dockerignore`
+- [ ] Test: build and run FastAPI container locally
+
+### 4.3 Docker Compose
+- [ ] Create `docker-compose.yml` at project root
+- [ ] Define `frontend` service (port 4200 → 80)
+- [ ] Define `backend` service (port 8000)
+- [ ] Add environment variables (Supabase URL, JWT secret, etc.)
+- [ ] Add health checks for both services
+
+### 4.4 Environment Variables
+- [ ] Create `.env.example` with template
+- [ ] Document all required env vars
+- [ ] Add `.env` to `.gitignore` (already done)
+- [ ] Configure Angular build to use env vars
+
+### 4.5 Docker Testing
+- [ ] Run `docker-compose up --build`
+- [ ] Verify frontend accessible at http://localhost:4200
+- [ ] Verify backend accessible at http://localhost:8000
+- [ ] Test full flow: signup → login → create todo → list todos
+
+---
+
+## Phase 5: Integration & Final Testing
+
+### 5.1 End-to-End Testing
+- [ ] Test: Sign up new user
+- [ ] Test: Login with email/password
+- [ ] Test: Create multiple todos
+- [ ] Test: Edit todo title and description
+- [ ] Test: Mark todo as completed
+- [ ] Test: Pin todo to top
+- [ ] Test: Soft delete todo
+- [ ] Test: Logout and login again (data persists)
+
+### 5.2 Edge Cases
+- [ ] Test: Try accessing todos without login (should redirect)
+- [ ] Test: Invalid JWT (should return 401)
+- [ ] Test: Create todo with empty title (should fail validation)
+- [ ] Test: Multiple users (can't see each other's todos)
+
+### 5.3 Production Readiness
+- [ ] Add logging (frontend: console, backend: structured logs)
+- [ ] Add rate limiting on backend (optional)
+- [ ] Use production Supabase project (not free tier test project)
+- [ ] Set up proper CORS (restrict to your domain)
+- [ ] Use HTTPS in production
+- [ ] Set secure JWT expiration times
+
+### 5.4 Documentation
+- [ ] Update README.md with setup instructions
+- [ ] Document environment variables
+- [ ] Add API documentation (FastAPI auto-generates this)
+- [ ] Add deployment notes
+
+---
+
+## Current Status
+
+**What's Done:**
+- ✅ Angular frontend created and running
+- ✅ FastAPI backend created with basic health check
+- ✅ Virtual environment set up
+- ✅ Git repository initialized
+- ✅ .gitignore configured
+
+**Next Step:**
+📍 **Phase 1.2:** Install Supabase JS SDK in Angular
+
+---
+
+## Quick Commands Reference
+
+### Development
+```bash
+# Frontend (Angular)
+cd frontend
+npm start                    # runs on http://localhost:4200
+
+# Backend (FastAPI)
+cd backend
+source venv/bin/activate
+uvicorn main:app --reload    # runs on http://localhost:8000
+```
+
+### Docker
+```bash
+# Build and run everything
+docker-compose up --build
+
+# Run in background
+docker-compose up -d
+
+# Stop everything
+docker-compose down
+
+# View logs
+docker-compose logs -f
+```
+
+### Git
+```bash
+# Check status
+git status
+
+# Commit progress
+git add .
+git commit -m "Completed Phase X.Y"
+```
+
+---
+
+## Notes
+
+- **Supabase runs externally** (cloud-hosted or local), not in Docker
+- **Start with frontend**, work down to Docker
+- **Test each phase** before moving to the next
+- **Commit often** to track progress
+- Use this guide as a living document - check off tasks as you complete them!

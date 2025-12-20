@@ -61,3 +61,66 @@ Once you run supabase start, copy and save:
 
 - The API URL (usually http://localhost:54321)
 - The anon key (the public key, safe to use in frontend)
+
+# Create dev environment configuration
+
+Configure Angular Environment Files
+
+What we're doing:
+Angular has environment.ts files where we store configuration like API URLs and keys. We'll add your Supabase details there.
+
+What to do:
+Create the folder:
+
+mkdir -p frontend/src/environments
+touch environments.ts
+
+environment.ts (local development):
+
+export const environment = {
+  production: false,
+  supabase: {
+    url: 'http://localhost:54321',
+    anonKey: 'YOUR_PUBLISHABLE_KEY_HERE'  // ← Use the publishable key
+  }
+};
+
+# Create SupabaseService
+
+What is a Service in Angular?
+
+Service = A class that handles business logic and data operations
+
+- Think of it as a helper that components can use
+- Keeps components clean and focused on UI
+- Can be reused across multiple components
+
+What will SupabaseService do?
+- Initialize the Supabase client (using our environment config)
+- Provide methods for signup, login, logout
+- Handle the current user session
+- Later: provide methods to call our FastAPI backend with JWT
+
+Create the service:
+
+Run this command in your terminal:
+
+cd frontend
+ng generate service core/services/supabase
+
+What this does:
+- Creates frontend/src/app/core/services/supabase.service.ts
+- Creates a test file supabase.service.spec.ts
+- Automatically registers the service with Angular
+
+Or if you prefer, you can create the file  and write the code manually.
+
+File to Create:
+Path: frontend/src/app/core/services/supabase.service.ts First, create the 
+
+folders if they don't exist:
+mkdir -p frontend/src/app/core/services
+
+touch supabase.service.ts
+
+Add code.

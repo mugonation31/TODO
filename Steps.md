@@ -124,3 +124,95 @@ mkdir -p frontend/src/app/core/services
 touch supabase.service.ts
 
 Add code.
+
+# Setting Up Database Schema
+
+What are we doing?
+
+Creating the database structure (tables) that will store our TODO items in Supabase.
+
+Why?
+
+- We need a place to store todos with proper columns (title, description, completed status, etc.)
+- We need Row Level Security (RLS) so users can only see their own todos
+- Migrations let us track database changes over time (version control for database)
+
+What is a Migration?
+
+Migration = A file containing SQL commands to change your database
+
+- Lives in supabase/migrations/ folder
+- Applied in order (001_, 002_, etc.)
+- Can be rolled back if needed
+- Same changes apply to local dev and production
+
+## Create the Migration File
+
+Create: supabase/migrations/001_create_todos_table.sql
+
+What this migration includes:
+
+1. **todos table** with columns:
+   - id (UUID, auto-generated)
+   - user_id (links to authenticated user)
+   - title, description
+   - completed (boolean, default false)
+   - priority (low/medium/high)
+   - due_date (optional deadline)
+   - created_at, updated_at (auto timestamps)
+
+2. **Indexes** for fast queries on user_id and completed status
+
+3. **Row Level Security (RLS) policies**:
+   - Users can only SELECT their own todos
+   - Users can only INSERT todos for themselves
+   - Users can only UPDATE their own todos
+   - Users can only DELETE their own todos
+
+4. **Trigger function** to auto-update updated_at timestamp
+
+## Apply the Migration
+
+Run from project root:
+
+```bash
+supabase db reset
+```
+
+What this does:
+- Resets local database
+- Applies all migrations in order
+- Creates the todos table with RLS policies
+
+## View the Table
+
+1. Open Supabase Studio: http://localhost:54323
+2. Click "Table Editor" in sidebar
+3. See your todos table
+
+## Fix Security Warning (search_path)
+
+Issue: Functions without fixed search_path are vulnerable to "trojan horse" attacks
+
+Real-life example:
+- Your function calls NOW()
+- Malicious user creates fake NOW() in another schema
+- Your function might call their malicious version instead
+
+Fix: Add SECURITY DEFINER and SET search_path to the function
+
+```sql
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public, pg_temp  -- Only look in public and temp schemas
+AS $$
+BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+END;
+$$;
+```
+
+Then reapply: supabase db reset

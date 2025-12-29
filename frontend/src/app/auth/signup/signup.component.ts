@@ -13,6 +13,7 @@ import { SupabaseService } from '../../core/services/supabase.service';
 })
 export class SignupComponent {
   // Form fields - these will be bound to HTML inputs using [(ngModel)]
+  name: string = '';
   email: string = '';
   password: string = '';
   confirmPassword: string = '';
@@ -37,8 +38,14 @@ export class SignupComponent {
     this.errorMessage = '';
 
     // Check all fields are filled
-    if (!this.email || !this.password || !this.confirmPassword) {
+    if (!this.name || !this.email || !this.password || !this.confirmPassword) {
       this.errorMessage = 'Please fill in all fields';
+      return false;
+    }
+
+    // Check name length (at least 2 characters)
+    if (this.name.trim().length < 2) {
+      this.errorMessage = 'Name must be at least 2 characters';
       return false;
     }
 
@@ -78,13 +85,14 @@ export class SignupComponent {
       this.errorMessage = '';
       this.successMessage = '';
 
-      // Call Supabase to create the user
-      await this.supabaseService.signUp(this.email, this.password, this.confirmPassword);
+      // Call Supabase to create the user (confirmPassword already validated above)
+      await this.supabaseService.signUp(this.email, this.password, this.name);
 
       // Success!
       this.successMessage = 'Account created successfully! Please check your email to confirm.';
 
       // Clear the form
+      this.name = '';
       this.email = '';
       this.password = '';
       this.confirmPassword = '';

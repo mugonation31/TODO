@@ -46,7 +46,7 @@ export class SupabaseService {
     }
 
     /**
-     * Sign up a new user with email and password
+     * Sign up a new user with email, password, and name
      */
     async signUp(email: string, password: string, name: string) {
         const { data, error } = await this.supabase.auth.signUp({
@@ -54,7 +54,7 @@ export class SupabaseService {
             password,
             options: {
                 data: {
-                    name 
+                    name: name  // Store name in user metadata
                 }
             }
         });

@@ -24,26 +24,26 @@ ALTER TABLE todos ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Users can view their own todos"
     ON todos
     FOR SELECT
-    USING (auth.uid() = user_id);
+    USING ((select auth.uid()) = user_id);
 
 -- RLS Policy: Users can insert their own todos
 CREATE POLICY "Users can insert their own todos"
     ON todos
     FOR INSERT
-    WITH CHECK (auth.uid() = user_id);
+    WITH CHECK ((select auth.uid()) = user_id);
 
 -- RLS Policy: Users can update their own todos
 CREATE POLICY "Users can update their own todos"
     ON todos
     FOR UPDATE
-    USING (auth.uid() = user_id)
-    WITH CHECK (auth.uid() = user_id);
+    USING ((select auth.uid()) = user_id)
+    WITH CHECK ((select auth.uid()) = user_id);
 
 -- RLS Policy: Users can delete their own todos
 CREATE POLICY "Users can delete their own todos"
     ON todos
     FOR DELETE
-    USING (auth.uid() = user_id);
+    USING ((select auth.uid()) = user_id);
 
 -- Create function to automatically update updated_at timestamp
 CREATE OR REPLACE FUNCTION update_updated_at_column()

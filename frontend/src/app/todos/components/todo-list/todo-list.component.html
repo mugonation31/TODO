@@ -1,9 +1,14 @@
 <div class="todo-list-container">
   <div class="header">
     <h1>My Todos</h1>
-    <button class="btn-new-todo" (click)="toggleForm()">
-      {{ showForm ? '✕ Cancel' : '+ New Todo' }}
-    </button>
+    <div class="header-actions">
+      <button class="btn-trash" routerLink="/trash">
+        🗑️ Trash
+      </button>
+      <button class="btn-new-todo" (click)="toggleForm()">
+        {{ showForm ? '✕ Cancel' : '+ New Todo' }}
+      </button>
+    </div>
   </div>
 
   <!-- Todo Form -->

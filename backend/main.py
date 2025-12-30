@@ -70,6 +70,14 @@ async def create_todo(
     return created_todo
 
 
+# Trash endpoint (must come BEFORE /api/todos/{todo_id} to avoid route collision)
+@app.get("/api/todos/trash", response_model=List[TodoResponse])
+async def get_trash(user_id: str = Depends(get_current_user)):
+    """Get all soft-deleted todos (trash)"""
+    todos = await db.get_deleted_todos(user_id)
+    return todos
+
+
 @app.get("/api/todos/{todo_id}", response_model=TodoResponse)
 async def get_todo(
     todo_id: str,
@@ -116,14 +124,7 @@ async def delete_todo(
     return {"message": "Todo deleted successfully"}
 
 
-# Trash endpoints
-@app.get("/api/todos/trash", response_model=List[TodoResponse])
-async def get_trash(user_id: str = Depends(get_current_user)):
-    """Get all soft-deleted todos (trash)"""
-    todos = await db.get_deleted_todos(user_id)
-    return todos
-
-
+# Restore and permanent delete endpoints
 @app.post("/api/todos/{todo_id}/restore", response_model=TodoResponse)
 async def restore_todo(
     todo_id: str,

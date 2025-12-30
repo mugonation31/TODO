@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { TodoService } from '../../services/todo.service';
 import { Todo } from '../../models/todo.model';
 import { TodoFormComponent } from '../todo-form/todo-form.component';
@@ -7,7 +8,7 @@ import { TodoFormComponent } from '../todo-form/todo-form.component';
 @Component({
   selector: 'app-todo-list',
   standalone: true,
-  imports: [CommonModule, TodoFormComponent],
+  imports: [CommonModule, RouterLink, TodoFormComponent],
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.scss'
 })

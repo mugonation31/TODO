@@ -14,19 +14,19 @@ Angular (Docker) → Supabase Auth → JWT → FastAPI (Docker) → Supabase Pos
 ### 1.1 Initial Setup
 - [x] Create Angular project
 - [x] Verify Angular runs at http://localhost:4200
-- [ ] Install Supabase JS SDK
-- [ ] Create environment configuration files
+- [x] Install Supabase JS SDK
+- [x] Create environment configuration files
 
 ### 1.2 Supabase Integration
-- [ ] Create Supabase project (get URL and anon key)
-- [ ] Configure Supabase client in Angular
-- [ ] Create `SupabaseService` for auth and API calls
+- [x] Create Supabase project (get URL and anon key)
+- [x] Configure Supabase client in Angular
+- [x] Create `SupabaseService` for auth and API calls
 
 ### 1.3 Authentication Components
-- [ ] Create `LoginComponent`
-- [ ] Create `RegisterComponent`
-- [ ] Create `AuthService` (wraps SupabaseService auth methods)
-- [ ] Add auth state management
+- [x] Create `LoginComponent`
+- [x] Create `RegisterComponent`
+- [x] Create `AuthService` (wraps SupabaseService auth methods)
+- [x] Add auth state management
 
 ### 1.4 Todo Components
 - [ ] Create `TodoListComponent` (display all todos)
@@ -35,7 +35,7 @@ Angular (Docker) → Supabase Auth → JWT → FastAPI (Docker) → Supabase Pos
 - [ ] Create `TodoService` (calls FastAPI backend with JWT)
 
 ### 1.5 Routing & Guards
-- [ ] Set up routes (/, /login, /register, /todos)
+- [x] Set up routes (/, /login, /register, /todos)
 - [ ] Create `AuthGuard` (protect /todos route)
 - [ ] Add navigation component with login/logout
 
@@ -55,21 +55,21 @@ Angular (Docker) → Supabase Auth → JWT → FastAPI (Docker) → Supabase Pos
 - [ ] Note down Database password (for direct DB access if needed)
 
 ### 2.2 Create Users Table
-- [ ] Open SQL Editor in Supabase Dashboard
-- [ ] Run SQL to create `public.users` table
-- [ ] Set up Row Level Security (RLS) policies for users
-- [ ] Test: verify table appears in Table Editor
+- [x] Open SQL Editor in Supabase Dashboard
+- [x] Run SQL to create `public.users` table
+- [x] Set up Row Level Security (RLS) policies for users
+- [x] Test: verify table appears in Table Editor
 
 ### 2.3 Create Todos Table
-- [ ] Run SQL to create `public.todos` table
-- [ ] Add indexes for performance (user_id)
-- [ ] Create trigger for auto-updating `updated_at`
-- [ ] Set up Row Level Security (RLS) policies for todos
+- [x] Run SQL to create `public.todos` table
+- [x] Add indexes for performance (user_id)
+- [x] Create trigger for auto-updating `updated_at`
+- [x] Set up Row Level Security (RLS) policies for todos
 
 ### 2.4 Auto-Profile Creation
-- [ ] Create trigger function to auto-create profile on signup
-- [ ] Attach trigger to `auth.users` table
-- [ ] Test: sign up a user and verify profile row is created
+- [x] Create trigger function to auto-create profile on signup
+- [x] Attach trigger to `auth.users` table
+- [x] Test: sign up a user and verify profile row is created
 
 ### 2.5 Database Testing
 - [ ] Test insert/select/update/delete via SQL editor
@@ -195,9 +195,13 @@ Angular (Docker) → Supabase Auth → JWT → FastAPI (Docker) → Supabase Pos
 - ✅ Virtual environment set up
 - ✅ Git repository initialized
 - ✅ .gitignore configured
+- ✅ Supabase SDK installed and configured
+- ✅ Authentication components (Login/Signup) created
+- ✅ Database tables created with RLS policies
+- ✅ Basic routing set up
 
 **Next Step:**
-📍 **Phase 1.2:** Install Supabase JS SDK in Angular
+📍 **Phase 1.4:** Create Todo Components (TodoListComponent, TodoItemComponent, TodoFormComponent, TodoService)
 
 ---
 

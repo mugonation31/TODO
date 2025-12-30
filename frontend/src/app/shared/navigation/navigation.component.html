@@ -1,0 +1,20 @@
+<!-- Only show navigation if user is logged in -->
+<nav *ngIf="currentUser" class="navbar">
+  <div class="nav-container">
+    <!-- Left side: App branding -->
+    <div class="nav-brand">
+      <h2>📝 My Todo App</h2>
+    </div>
+
+    <!-- Right side: User info and logout -->
+    <div class="nav-user">
+      <!-- User greeting -->
+      <span class="user-name">Hi, {{ userName }}!</span>
+
+      <!-- Logout button -->
+      <button (click)="logout()" class="logout-btn">
+        Logout
+      </button>
+    </div>
+  </div>
+</nav>

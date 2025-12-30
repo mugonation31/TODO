@@ -1,5 +1,17 @@
 <div class="todo-list-container">
-  <h1>My Todos</h1>
+  <div class="header">
+    <h1>My Todos</h1>
+    <button class="btn-new-todo" (click)="toggleForm()">
+      {{ showForm ? '✕ Cancel' : '+ New Todo' }}
+    </button>
+  </div>
+
+  <!-- Todo Form -->
+  <app-todo-form
+    *ngIf="showForm"
+    (formSubmit)="onFormSubmit($event)"
+    (formCancel)="onFormCancel()"
+  ></app-todo-form>
 
   <!-- Filters -->
   <div class="filters">

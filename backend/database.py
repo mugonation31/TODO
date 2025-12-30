@@ -40,7 +40,7 @@ async def get_todos(user_id: str) -> List[Dict[str, Any]]:
     """
     pool = await get_pool()
     query = """
-        SELECT id, user_id, title, description, completed, pinned,
+        SELECT id::text, user_id::text, title, description, completed, pinned,
                priority, due_date, created_at, updated_at, deleted_at
         FROM todos
         WHERE user_id = $1 AND deleted_at IS NULL
@@ -65,7 +65,7 @@ async def create_todo(user_id: str, todo: TodoCreate) -> Dict[str, Any]:
     query = """
         INSERT INTO todos (user_id, title, description, priority, due_date, completed, pinned)
         VALUES ($1, $2, $3, $4, $5, false, false)
-        RETURNING id, user_id, title, description, completed, pinned,
+        RETURNING id::text, user_id::text, title, description, completed, pinned,
                   priority, due_date, created_at, updated_at, deleted_at
     """
     row = await pool.fetchrow(
@@ -119,7 +119,7 @@ async def update_todo(todo_id: str, user_id: str, updates: TodoUpdate) -> Option
         UPDATE todos
         SET {', '.join(update_fields)}, updated_at = NOW()
         WHERE user_id = ${param_count} AND id = ${param_count + 1} AND deleted_at IS NULL
-        RETURNING id, user_id, title, description, completed, pinned,
+        RETURNING id::text, user_id::text, title, description, completed, pinned,
                   priority, due_date, created_at, updated_at, deleted_at
     """
 
@@ -162,7 +162,7 @@ async def get_todo_by_id(todo_id: str, user_id: str) -> Optional[Dict[str, Any]]
     """
     pool = await get_pool()
     query = """
-        SELECT id, user_id, title, description, completed, pinned,
+        SELECT id::text, user_id::text, title, description, completed, pinned,
                priority, due_date, created_at, updated_at, deleted_at
         FROM todos
         WHERE id = $1 AND user_id = $2 AND deleted_at IS NULL
@@ -183,7 +183,7 @@ async def get_deleted_todos(user_id: str) -> List[Dict[str, Any]]:
     """
     pool = await get_pool()
     query = """
-        SELECT id, user_id, title, description, completed, pinned,
+        SELECT id::text, user_id::text, title, description, completed, pinned,
                priority, due_date, created_at, updated_at, deleted_at
         FROM todos
         WHERE user_id = $1 AND deleted_at IS NOT NULL
@@ -209,7 +209,7 @@ async def restore_todo(todo_id: str, user_id: str) -> Optional[Dict[str, Any]]:
         UPDATE todos
         SET deleted_at = NULL
         WHERE id = $1 AND user_id = $2 AND deleted_at IS NOT NULL
-        RETURNING id, user_id, title, description, completed, pinned,
+        RETURNING id::text, user_id::text, title, description, completed, pinned,
                   priority, due_date, created_at, updated_at, deleted_at
     """
     row = await pool.fetchrow(query, todo_id, user_id)

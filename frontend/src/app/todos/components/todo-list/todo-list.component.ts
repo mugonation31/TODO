@@ -2,11 +2,12 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TodoService } from '../../services/todo.service';
 import { Todo } from '../../models/todo.model';
+import { TodoFormComponent } from '../todo-form/todo-form.component';
 
 @Component({
   selector: 'app-todo-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TodoFormComponent],
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.scss'
 })
@@ -21,6 +22,9 @@ export class TodoListComponent implements OnInit {
   // Filter options
   showCompleted = true;
   showPinnedOnly = false;
+
+  // Form visibility
+  showForm = false;
 
   ngOnInit() {
     this.loadTodos();
@@ -154,5 +158,55 @@ export class TodoListComponent implements OnInit {
    */
   trackByTodoId(index: number, todo: Todo): string {
     return todo.id || index.toString();
+  }
+
+  /**
+   * Toggle form visibility
+   */
+  toggleForm() {
+    this.showForm = !this.showForm;
+  }
+
+  /**
+   * Handle form submission (create new todo)
+   */
+  onFormSubmit(todoData: Partial<Todo>) {
+    // Ensure title is present (form validation guarantees this)
+    if (!todoData.title) {
+      this.error = 'Title is required';
+      return;
+    }
+
+    this.loading = true;
+    this.error = null;
+
+    // Create properly typed request
+    const createRequest = {
+      title: todoData.title,
+      description: todoData.description,
+      priority: todoData.priority,
+      due_date: todoData.due_date
+    };
+
+    this.todoService.createTodo(createRequest).subscribe({
+      next: (newTodo) => {
+        this.todos.unshift(newTodo); // Add to beginning of array
+        this.applyFilters();
+        this.showForm = false; // Hide form after successful creation
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Error creating todo:', err);
+        this.error = 'Failed to create todo. Please try again.';
+        this.loading = false;
+      }
+    });
+  }
+
+  /**
+   * Handle form cancellation
+   */
+  onFormCancel() {
+    this.showForm = false;
   }
 }

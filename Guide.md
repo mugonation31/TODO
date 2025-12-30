@@ -31,14 +31,14 @@ Angular (Docker) → Supabase Auth → JWT → FastAPI (Docker) → Supabase Pos
 ### 1.4 Todo Components
 - [x] Create `TodoListComponent` (display all todos)
 - [ ] Create `TodoItemComponent` (single todo with edit/delete/pin/complete)
-- [ ] Create `TodoFormComponent` (create/edit todos)
+- [x] Create `TodoFormComponent` (create/edit todos)
 - [x] Create `TodoService` (calls FastAPI backend with JWT)
 - [x] Add Todo models (Todo, CreateTodoRequest, UpdateTodoRequest)
 - [x] Implement trash/restore functionality in TodoService
 
 ### 1.5 Routing & Guards
 - [x] Set up routes (/, /login, /register, /todos)
-- [ ] Create `AuthGuard` (protect /todos route)
+- [x] Create `AuthGuard` (protect /todos route)
 - [x] Add navigation component with login/logout
 
 ### 1.6 UI Polish
@@ -210,9 +210,13 @@ Angular (Docker) → Supabase Auth → JWT → FastAPI (Docker) → Supabase Pos
 - ✅ Navigation component with user greeting and logout
 - ✅ HttpClient provider configured
 - ✅ Loading states, error handling, and responsive design
+- ✅ FastAPI backend with JWT auth and async CRUD endpoints
+- ✅ TodoFormComponent with reactive forms and validation
+- ✅ AuthGuard protecting /todos route
+- ✅ Todo form integrated into TodoListComponent
 
 **Next Step:**
-📍 **Phase 1.4:** Create TodoFormComponent (for creating/editing todos) and AuthGuard (to protect routes)
+📍 **Phase 2.3 & 3:** Test full integration (frontend ↔ backend) and optionally add Docker configuration
 
 ---
 

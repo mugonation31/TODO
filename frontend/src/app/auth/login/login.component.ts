@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { SupabaseService } from '../../core/services/supabase.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],  // CommonModule for *ngIf, FormsModule for [(ngModel)]
+  imports: [CommonModule, FormsModule, RouterLink],  // RouterLink for <a routerLink="/signup">
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

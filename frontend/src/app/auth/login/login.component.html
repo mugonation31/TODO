@@ -1,1 +1,66 @@
-<p>login works!</p>
+<div class="login-container">
+  <div class="login-card">
+    <!-- Page Title -->
+    <h2>Welcome Back</h2>
+    <p class="subtitle">Login to your TODO account</p>
+
+    <!-- Login Form -->
+    <!-- (ngSubmit)="onLogin()" connects to TypeScript onLogin() method -->
+    <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+
+      <!-- Email Input -->
+      <!-- [(ngModel)]="email" creates two-way binding with TypeScript email property -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="Enter your email"
+          required
+          [disabled]="loading"
+        />
+      </div>
+
+      <!-- Password Input -->
+      <!-- [(ngModel)]="password" binds to TypeScript password property -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          [(ngModel)]="password"
+          placeholder="Enter your password"
+          required
+          [disabled]="loading"
+        />
+      </div>
+
+      <!-- Error Message -->
+      <!-- *ngIf="errorMessage" only shows when errorMessage has a value -->
+      <div class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Submit Button -->
+      <!-- [disabled]="loading" binds to TypeScript loading property -->
+      <!-- Button text changes based on loading state -->
+      <button
+        type="submit"
+        class="login-button"
+        [disabled]="loading"
+      >
+        {{ loading ? 'Logging in...' : 'Login' }}
+      </button>
+    </form>
+
+    <!-- Link to Signup -->
+    <!-- routerLink="/signup" connects to Angular routing -->
+    <div class="signup-link">
+      Don't have an account?
+      <a routerLink="/signup">Sign up</a>
+    </div>
+  </div>
+</div>

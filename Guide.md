@@ -32,7 +32,9 @@ Angular (Docker) → Supabase Auth → JWT → FastAPI (Docker) → Supabase Pos
 - [ ] Create `TodoListComponent` (display all todos)
 - [ ] Create `TodoItemComponent` (single todo with edit/delete/pin/complete)
 - [ ] Create `TodoFormComponent` (create/edit todos)
-- [ ] Create `TodoService` (calls FastAPI backend with JWT)
+- [x] Create `TodoService` (calls FastAPI backend with JWT)
+- [x] Add Todo models (Todo, CreateTodoRequest, UpdateTodoRequest)
+- [x] Implement trash/restore functionality in TodoService
 
 ### 1.5 Routing & Guards
 - [x] Set up routes (/, /login, /register, /todos)
@@ -65,6 +67,9 @@ Angular (Docker) → Supabase Auth → JWT → FastAPI (Docker) → Supabase Pos
 - [x] Add indexes for performance (user_id)
 - [x] Create trigger for auto-updating `updated_at`
 - [x] Set up Row Level Security (RLS) policies for todos
+- [x] Add `pinned` column for pinning important todos
+- [x] Add `deleted_at` column for soft deletes
+- [x] Add indexes for pinned and deleted_at columns
 
 ### 2.4 Auto-Profile Creation
 - [x] Create trigger function to auto-create profile on signup
@@ -199,9 +204,12 @@ Angular (Docker) → Supabase Auth → JWT → FastAPI (Docker) → Supabase Pos
 - ✅ Authentication components (Login/Signup) created
 - ✅ Database tables created with RLS policies
 - ✅ Basic routing set up
+- ✅ Todo models created with all fields (priority, due_date, pinned, deleted_at)
+- ✅ TodoService implemented with full CRUD and trash/restore features
+- ✅ Database schema updated with pinned and deleted_at columns
 
 **Next Step:**
-📍 **Phase 1.4:** Create Todo Components (TodoListComponent, TodoItemComponent, TodoFormComponent, TodoService)
+📍 **Phase 1.4:** Create Todo UI Components (TodoListComponent, TodoItemComponent, TodoFormComponent)
 
 ---
 

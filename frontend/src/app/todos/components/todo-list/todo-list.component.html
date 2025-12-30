@@ -1,0 +1,82 @@
+<div class="todo-list-container">
+  <h1>My Todos</h1>
+
+  <!-- Filters -->
+  <div class="filters">
+    <label>
+      <input type="checkbox" [checked]="showCompleted" (change)="toggleShowCompleted()" />
+      Show Completed
+    </label>
+    <label>
+      <input type="checkbox" [checked]="showPinnedOnly" (change)="toggleShowPinnedOnly()" />
+      Show Pinned Only
+    </label>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading">
+    Loading todos...
+  </div>
+
+  <!-- Todo List -->
+  <div *ngIf="!loading && filteredTodos.length > 0" class="todos">
+    <div
+      *ngFor="let todo of filteredTodos; trackBy: trackByTodoId"
+      class="todo-item"
+      [class.completed]="todo.completed"
+      [class.pinned]="todo.pinned"
+    >
+      <!-- Checkbox -->
+      <input
+        type="checkbox"
+        [checked]="todo.completed"
+        (change)="toggleComplete(todo)"
+        class="todo-checkbox"
+      />
+
+      <!-- Todo Content -->
+      <div class="todo-content">
+        <h3 class="todo-title">
+          {{ todo.title }}
+          <span *ngIf="todo.pinned" class="pin-badge">📌</span>
+          <span *ngIf="todo.priority" class="priority-badge" [class]="'priority-' + todo.priority">
+            {{ todo.priority }}
+          </span>
+        </h3>
+        <p *ngIf="todo.description" class="todo-description">{{ todo.description }}</p>
+        <div class="todo-meta">
+          <span *ngIf="todo.due_date" class="due-date">Due: {{ todo.due_date | date:'short' }}</span>
+          <span class="created-date">Created: {{ todo.created_at | date:'short' }}</span>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="todo-actions">
+        <button
+          (click)="togglePin(todo)"
+          class="btn-icon"
+          [title]="todo.pinned ? 'Unpin' : 'Pin'"
+        >
+          {{ todo.pinned ? '📌' : '📍' }}
+        </button>
+        <button
+          (click)="deleteTodo(todo)"
+          class="btn-icon btn-delete"
+          title="Delete"
+        >
+          🗑️
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && filteredTodos.length === 0" class="empty-state">
+    <p>No todos found. Create one to get started!</p>
+  </div>
+</div>

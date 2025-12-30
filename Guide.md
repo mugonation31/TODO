@@ -30,15 +30,16 @@ Angular (Docker) → Supabase Auth → JWT → FastAPI (Docker) → Supabase Pos
 
 ### 1.4 Todo Components
 - [x] Create `TodoListComponent` (display all todos)
-- [ ] Create `TodoItemComponent` (single todo with edit/delete/pin/complete)
+- [x] Create `TodoItemComponent` (single todo with edit/delete/pin/complete)
 - [x] Create `TodoFormComponent` (create/edit todos)
 - [x] Create `TodoService` (calls FastAPI backend with JWT)
 - [x] Add Todo models (Todo, CreateTodoRequest, UpdateTodoRequest)
 - [x] Implement trash/restore functionality in TodoService
+- [x] Create `TrashComponent` (view and manage deleted todos)
 
 ### 1.5 Routing & Guards
-- [x] Set up routes (/, /login, /register, /todos)
-- [x] Create `AuthGuard` (protect /todos route)
+- [x] Set up routes (/, /login, /register, /todos, /trash)
+- [x] Create `AuthGuard` (protect /todos and /trash routes)
 - [x] Add navigation component with login/logout
 
 ### 1.6 UI Polish
@@ -52,9 +53,9 @@ Angular (Docker) → Supabase Auth → JWT → FastAPI (Docker) → Supabase Pos
 ## Phase 2: Database (Supabase)
 
 ### 2.1 Supabase Project Setup
-- [ ] Create new Supabase project at https://supabase.com
-- [ ] Note down Project URL and anon/public API key
-- [ ] Note down Database password (for direct DB access if needed)
+- [x] Create new Supabase project at https://supabase.com
+- [x] Note down Project URL and anon/public API key
+- [x] Note down Database password (for direct DB access if needed)
 
 ### 2.2 Create Users Table
 - [x] Open SQL Editor in Supabase Dashboard
@@ -77,9 +78,9 @@ Angular (Docker) → Supabase Auth → JWT → FastAPI (Docker) → Supabase Pos
 - [x] Test: sign up a user and verify profile row is created
 
 ### 2.5 Database Testing
-- [ ] Test insert/select/update/delete via SQL editor
-- [ ] Verify RLS policies work (try accessing other user's data)
-- [ ] Check soft delete behavior (deleted_at)
+- [x] Test insert/select/update/delete via SQL editor
+- [x] Verify RLS policies work (try accessing other user's data)
+- [x] Check soft delete behavior (deleted_at)
 
 ---
 
@@ -220,9 +221,11 @@ Angular (Docker) → Supabase Auth → JWT → FastAPI (Docker) → Supabase Pos
 - ✅ CORS configuration
 - ✅ End-to-end integration tested and working
 - ✅ Modern purple gradient UI design throughout
+- ✅ TodoItemComponent created with reusable design for normal and trash modes
+- ✅ TrashComponent implemented with restore and permanent delete functionality
 
 **Next Step:**
-📍 **Optional enhancements:** Create TodoItemComponent, implement trash view page, or add Docker configuration (Phase 4)
+📍 **Docker Configuration (Phase 4):** Containerize the application for deployment
 
 ---
 

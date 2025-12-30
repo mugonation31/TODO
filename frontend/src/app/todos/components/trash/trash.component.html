@@ -22,54 +22,13 @@
 
   <!-- Deleted Todos List -->
   <div *ngIf="!loading && deletedTodos.length > 0" class="todos-container">
-    <div
+    <app-todo-item
       *ngFor="let todo of deletedTodos; trackBy: trackByTodoId"
-      class="todo-item"
-    >
-      <div class="todo-content">
-        <div class="todo-header">
-          <h3 class="todo-title">{{ todo.title }}</h3>
-          <span *ngIf="todo.priority" class="priority-badge" [class]="'priority-' + todo.priority">
-            {{ todo.priority }}
-          </span>
-        </div>
-
-        <p *ngIf="todo.description" class="todo-description">
-          {{ todo.description }}
-        </p>
-
-        <div class="todo-meta">
-          <span class="meta-item">
-            📅 Due: {{ todo.due_date ? formatDate(todo.due_date) : 'No due date' }}
-          </span>
-          <span class="meta-item">
-            🗑️ Deleted: {{ formatDate(todo.deleted_at) }}
-          </span>
-          <span *ngIf="todo.completed" class="meta-item completed-badge">
-            ✓ Completed
-          </span>
-        </div>
-      </div>
-
-      <div class="todo-actions">
-        <button
-          class="btn btn-restore"
-          (click)="restoreTodo(todo)"
-          [disabled]="loading"
-          title="Restore this todo"
-        >
-          ↺ Restore
-        </button>
-        <button
-          class="btn btn-delete"
-          (click)="permanentlyDeleteTodo(todo)"
-          [disabled]="loading"
-          title="Delete permanently"
-        >
-          ✕ Delete Forever
-        </button>
-      </div>
-    </div>
+      [todo]="todo"
+      mode="trash"
+      (restore)="restoreTodo($event)"
+      (permanentDelete)="permanentlyDeleteTodo($event)"
+    ></app-todo-item>
   </div>
 
   <!-- Empty State -->

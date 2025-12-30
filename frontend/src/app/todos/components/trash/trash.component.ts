@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { TodoService } from '../../services/todo.service';
 import { Todo } from '../../models/todo.model';
+import { TodoItemComponent } from '../todo-item/todo-item.component';
 
 @Component({
   selector: 'app-trash',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TodoItemComponent],
   templateUrl: './trash.component.html',
   styleUrl: './trash.component.scss'
 })

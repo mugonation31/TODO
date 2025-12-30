@@ -4,11 +4,12 @@ import { RouterLink } from '@angular/router';
 import { TodoService } from '../../services/todo.service';
 import { Todo } from '../../models/todo.model';
 import { TodoFormComponent } from '../todo-form/todo-form.component';
+import { TodoItemComponent } from '../todo-item/todo-item.component';
 
 @Component({
   selector: 'app-todo-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, TodoFormComponent],
+  imports: [CommonModule, RouterLink, TodoFormComponent, TodoItemComponent],
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.scss'
 })

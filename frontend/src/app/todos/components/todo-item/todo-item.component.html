@@ -1,0 +1,96 @@
+<div
+  class="todo-item"
+  [class.completed]="todo.completed"
+  [class.pinned]="todo.pinned"
+  [class.trash-mode]="mode === 'trash'"
+>
+  <!-- Checkbox (normal mode only) -->
+  <input
+    *ngIf="mode === 'normal'"
+    type="checkbox"
+    [checked]="todo.completed"
+    (change)="onToggleComplete()"
+    class="todo-checkbox"
+  />
+
+  <!-- Todo Content -->
+  <div class="todo-content">
+    <div class="todo-header">
+      <h3 class="todo-title">
+        {{ todo.title }}
+        <span *ngIf="todo.pinned && mode === 'normal'" class="pin-badge">📌</span>
+        <span *ngIf="todo.priority" class="priority-badge" [class]="'priority-' + todo.priority">
+          {{ todo.priority }}
+        </span>
+      </h3>
+    </div>
+
+    <p *ngIf="todo.description" class="todo-description">
+      {{ todo.description }}
+    </p>
+
+    <div class="todo-meta">
+      <!-- Normal mode metadata -->
+      <ng-container *ngIf="mode === 'normal'">
+        <span *ngIf="todo.due_date" class="meta-item due-date">
+          Due: {{ todo.due_date | date:'short' }}
+        </span>
+        <span class="meta-item created-date">
+          Created: {{ todo.created_at | date:'short' }}
+        </span>
+      </ng-container>
+
+      <!-- Trash mode metadata -->
+      <ng-container *ngIf="mode === 'trash'">
+        <span class="meta-item">
+          📅 Due: {{ todo.due_date ? formatDate(todo.due_date) : 'No due date' }}
+        </span>
+        <span class="meta-item">
+          🗑️ Deleted: {{ formatDate(todo.deleted_at) }}
+        </span>
+        <span *ngIf="todo.completed" class="meta-item completed-badge">
+          ✓ Completed
+        </span>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="todo-actions">
+    <!-- Normal mode actions -->
+    <ng-container *ngIf="mode === 'normal'">
+      <button
+        (click)="onTogglePin()"
+        class="btn-icon"
+        [title]="todo.pinned ? 'Unpin' : 'Pin'"
+      >
+        {{ todo.pinned ? '📌' : '📍' }}
+      </button>
+      <button
+        (click)="onDelete()"
+        class="btn-icon"
+        title="Delete"
+      >
+        🗑️
+      </button>
+    </ng-container>
+
+    <!-- Trash mode actions -->
+    <ng-container *ngIf="mode === 'trash'">
+      <button
+        class="btn btn-restore"
+        (click)="onRestore()"
+        title="Restore this todo"
+      >
+        ↺ Restore
+      </button>
+      <button
+        class="btn btn-delete"
+        (click)="onPermanentDelete()"
+        title="Delete permanently"
+      >
+        ✕ Delete Forever
+      </button>
+    </ng-container>
+  </div>
+</div>

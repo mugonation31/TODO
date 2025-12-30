@@ -29,7 +29,7 @@ Angular (Docker) → Supabase Auth → JWT → FastAPI (Docker) → Supabase Pos
 - [x] Add auth state management
 
 ### 1.4 Todo Components
-- [ ] Create `TodoListComponent` (display all todos)
+- [x] Create `TodoListComponent` (display all todos)
 - [ ] Create `TodoItemComponent` (single todo with edit/delete/pin/complete)
 - [ ] Create `TodoFormComponent` (create/edit todos)
 - [x] Create `TodoService` (calls FastAPI backend with JWT)
@@ -39,13 +39,13 @@ Angular (Docker) → Supabase Auth → JWT → FastAPI (Docker) → Supabase Pos
 ### 1.5 Routing & Guards
 - [x] Set up routes (/, /login, /register, /todos)
 - [ ] Create `AuthGuard` (protect /todos route)
-- [ ] Add navigation component with login/logout
+- [x] Add navigation component with login/logout
 
 ### 1.6 UI Polish
-- [ ] Add loading states
-- [ ] Add error handling and user feedback
-- [ ] Style components (basic CSS)
-- [ ] Add filters (show completed, show pinned only)
+- [x] Add loading states
+- [x] Add error handling and user feedback
+- [x] Style components (modern gradient design)
+- [x] Add filters (show completed, show pinned only)
 
 ---
 
@@ -203,13 +203,16 @@ Angular (Docker) → Supabase Auth → JWT → FastAPI (Docker) → Supabase Pos
 - ✅ Supabase SDK installed and configured
 - ✅ Authentication components (Login/Signup) created
 - ✅ Database tables created with RLS policies
-- ✅ Basic routing set up
 - ✅ Todo models created with all fields (priority, due_date, pinned, deleted_at)
 - ✅ TodoService implemented with full CRUD and trash/restore features
 - ✅ Database schema updated with pinned and deleted_at columns
+- ✅ TodoListComponent with modern UI, filters, and CRUD actions
+- ✅ Navigation component with user greeting and logout
+- ✅ HttpClient provider configured
+- ✅ Loading states, error handling, and responsive design
 
 **Next Step:**
-📍 **Phase 1.4:** Create Todo UI Components (TodoListComponent, TodoItemComponent, TodoFormComponent)
+📍 **Phase 1.4:** Create TodoFormComponent (for creating/editing todos) and AuthGuard (to protect routes)
 
 ---
 

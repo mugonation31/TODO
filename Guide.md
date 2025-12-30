@@ -90,35 +90,39 @@ Angular (Docker) → Supabase Auth → JWT → FastAPI (Docker) → Supabase Pos
 - [x] Create Python virtual environment
 - [x] Install FastAPI and Uvicorn
 - [x] Create basic main.py with health check
-- [ ] Create requirements.txt with all dependencies
-- [ ] Create .env file for secrets
+- [x] Create requirements.txt with all dependencies
+- [x] Create .env file for secrets
 
 ### 3.2 Dependencies & Configuration
-- [ ] Install: `python-jose` (JWT), `python-dotenv`, `httpx`, `asyncpg`
-- [ ] Create `config.py` (load env vars: Supabase URL, JWT secret, DB URL)
-- [ ] Create database connection pool (async)
+- [x] Install: `python-jose` (JWT), `python-dotenv`, `httpx`, `asyncpg`
+- [x] Create `config.py` (load env vars: Supabase URL, JWT secret, DB URL)
+- [x] Create database connection pool (async)
 
 ### 3.3 JWT Verification
-- [ ] Create `auth.py` with JWT verification function
-- [ ] Create dependency `get_current_user` (extracts user_id from JWT)
-- [ ] Add CORS middleware (allow Angular origin)
+- [x] Create `auth.py` with JWT verification function
+- [x] Create dependency `get_current_user` (extracts user_id from JWT)
+- [x] Add CORS middleware (allow Angular origin)
 
 ### 3.4 Database Models & Queries
-- [ ] Create `models.py` (Pydantic models for Todo, User)
-- [ ] Create `database.py` (async Postgres query functions)
-- [ ] Add CRUD functions: create_todo, get_todos, update_todo, soft_delete_todo
+- [x] Create `models.py` (Pydantic models for Todo, User)
+- [x] Create `database.py` (async Postgres query functions)
+- [x] Add CRUD functions: create_todo, get_todos, update_todo, soft_delete_todo
+- [x] Fix UUID to string serialization (::text casting in SQL queries)
 
 ### 3.5 API Endpoints
-- [ ] `GET /api/todos` - list user's todos (exclude deleted)
-- [ ] `POST /api/todos` - create new todo
-- [ ] `PATCH /api/todos/{id}` - update todo (title, description, completed, pinned)
-- [ ] `DELETE /api/todos/{id}` - soft delete todo (set deleted_at)
-- [ ] `GET /api/me` - get current user profile (optional)
+- [x] `GET /api/todos` - list user's todos (exclude deleted)
+- [x] `POST /api/todos` - create new todo
+- [x] `PATCH /api/todos/{id}` - update todo (title, description, completed, pinned)
+- [x] `DELETE /api/todos/{id}` - soft delete todo (set deleted_at)
+- [x] `GET /api/trash` - get deleted todos
+- [x] `POST /api/todos/{id}/restore` - restore deleted todo
+- [x] `DELETE /api/todos/{id}/permanent` - permanently delete todo
 
 ### 3.6 Testing Backend
-- [ ] Test endpoints with curl/Postman using real Supabase JWT
-- [ ] Verify user isolation (can't see other users' todos)
-- [ ] Test error cases (invalid JWT, missing fields, etc.)
+- [x] Test endpoints with curl/Postman using real Supabase JWT
+- [x] Verify user isolation (can't see other users' todos)
+- [x] Test error cases (invalid JWT, missing fields, etc.)
+- [x] End-to-end integration test (Angular → FastAPI → Postgres)
 
 ---
 
@@ -161,13 +165,13 @@ Angular (Docker) → Supabase Auth → JWT → FastAPI (Docker) → Supabase Pos
 ## Phase 5: Integration & Final Testing
 
 ### 5.1 End-to-End Testing
-- [ ] Test: Sign up new user
-- [ ] Test: Login with email/password
-- [ ] Test: Create multiple todos
-- [ ] Test: Edit todo title and description
-- [ ] Test: Mark todo as completed
-- [ ] Test: Pin todo to top
-- [ ] Test: Soft delete todo
+- [x] Test: Sign up new user
+- [x] Test: Login with email/password
+- [x] Test: Create multiple todos
+- [x] Test: Edit todo title and description
+- [x] Test: Mark todo as completed
+- [x] Test: Pin todo to top
+- [x] Test: Soft delete todo
 - [ ] Test: Logout and login again (data persists)
 
 ### 5.2 Edge Cases
@@ -196,27 +200,29 @@ Angular (Docker) → Supabase Auth → JWT → FastAPI (Docker) → Supabase Pos
 
 **What's Done:**
 - ✅ Angular frontend created and running
-- ✅ FastAPI backend created with basic health check
+- ✅ FastAPI backend created with JWT auth and async CRUD endpoints
 - ✅ Virtual environment set up
 - ✅ Git repository initialized
 - ✅ .gitignore configured
 - ✅ Supabase SDK installed and configured
-- ✅ Authentication components (Login/Signup) created
+- ✅ Authentication components (Login/Signup) created with modern UI
 - ✅ Database tables created with RLS policies
 - ✅ Todo models created with all fields (priority, due_date, pinned, deleted_at)
 - ✅ TodoService implemented with full CRUD and trash/restore features
 - ✅ Database schema updated with pinned and deleted_at columns
 - ✅ TodoListComponent with modern UI, filters, and CRUD actions
+- ✅ TodoFormComponent with reactive forms and validation
+- ✅ AuthGuard protecting /todos route
 - ✅ Navigation component with user greeting and logout
 - ✅ HttpClient provider configured
 - ✅ Loading states, error handling, and responsive design
-- ✅ FastAPI backend with JWT auth and async CRUD endpoints
-- ✅ TodoFormComponent with reactive forms and validation
-- ✅ AuthGuard protecting /todos route
-- ✅ Todo form integrated into TodoListComponent
+- ✅ Backend UUID to string serialization fix
+- ✅ CORS configuration
+- ✅ End-to-end integration tested and working
+- ✅ Modern purple gradient UI design throughout
 
 **Next Step:**
-📍 **Phase 2.3 & 3:** Test full integration (frontend ↔ backend) and optionally add Docker configuration
+📍 **Optional enhancements:** Create TodoItemComponent, implement trash view page, or add Docker configuration (Phase 4)
 
 ---
 

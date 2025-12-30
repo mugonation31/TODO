@@ -20,7 +20,7 @@ export class TodoListComponent implements OnInit {
   error: string | null = null;
 
   // Filter options
-  showCompleted = true;
+  showCompleted = false;
   showPinnedOnly = false;
 
   // Form visibility
@@ -59,10 +59,10 @@ export class TodoListComponent implements OnInit {
       // Filter out deleted todos
       if (todo.deleted_at) return false;
 
-      // Filter by completed status
-      if (!this.showCompleted && todo.completed) return false;
+      // Filter by completed status (show only completed when checked)
+      if (this.showCompleted && !todo.completed) return false;
 
-      // Filter by pinned status
+      // Filter by pinned status (show only pinned when checked)
       if (this.showPinnedOnly && !todo.pinned) return false;
 
       return true;
